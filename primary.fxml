@@ -29,7 +29,7 @@
             <HBox alignment="BOTTOM_LEFT" prefHeight="44.0" prefWidth="389.0" HBox.hgrow="ALWAYS" />
             <HBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="160.0" style="-fx-background-color: #E9E9E9;" HBox.hgrow="NEVER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="61.0" style="-fx-background-color: transparent;" HBox.hgrow="NEVER">
+                  <Button fx:id="addPdfButton" mnemonicParsing="false" onAction="#addPdf" prefHeight="44.0" prefWidth="61.0" style="-fx-background-color: transparent;" HBox.hgrow="NEVER">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>

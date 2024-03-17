@@ -3,12 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="667.0" prefWidth="500.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FFCBCB 0%, #E95252 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.RegistrationScene">
    <children>
@@ -26,7 +27,7 @@
       </VBox>
       <VBox layoutY="139.0" prefHeight="77.0" prefWidth="500.0">
          <children>
-            <TextField prefHeight="35.0" prefWidth="389.0" promptText="Imie" style="-fx-background-radius: 10;">
+            <TextField fx:id="nameTextField" prefHeight="35.0" prefWidth="389.0" promptText="Imie" style="-fx-background-radius: 10;">
                <VBox.margin>
                   <Insets left="55.0" right="55.0" top="20.0" />
                </VBox.margin>
@@ -38,7 +39,7 @@
       </VBox>
       <VBox layoutY="206.0" prefHeight="77.0" prefWidth="500.0">
          <children>
-            <TextField prefHeight="31.0" prefWidth="389.0" promptText="Nazwisko" style="-fx-background-radius: 10;">
+            <TextField fx:id="lastNameTextField" prefHeight="31.0" prefWidth="389.0" promptText="Nazwisko" style="-fx-background-radius: 10;">
                <VBox.margin>
                   <Insets left="55.0" right="55.0" top="20.0" />
                </VBox.margin>
@@ -50,7 +51,7 @@
       </VBox>
       <VBox layoutY="274.0" prefHeight="77.0" prefWidth="500.0">
          <children>
-            <TextField prefHeight="21.0" prefWidth="389.0" promptText="Email" style="-fx-background-radius: 10;">
+            <TextField fx:id="EmailTextField" prefHeight="21.0" prefWidth="389.0" promptText="Email" style="-fx-background-radius: 10;">
                <VBox.margin>
                   <Insets left="55.0" right="55.0" top="20.0" />
                </VBox.margin>
@@ -62,33 +63,42 @@
       </VBox>
       <VBox layoutY="340.0" prefHeight="77.0" prefWidth="500.0">
          <children>
-            <TextField prefHeight="24.0" prefWidth="389.0" promptText="Hasło" style="-fx-background-radius: 10;">
+            <PasswordField fx:id="PasswordTextField" prefHeight="37.0" prefWidth="400.0" promptText="Hasło" style="-fx-background-radius: 10;">
                <VBox.margin>
                   <Insets left="55.0" right="55.0" top="20.0" />
                </VBox.margin>
                <font>
                   <Font size="18.0" />
                </font>
-            </TextField>
+            </PasswordField>
          </children>
       </VBox>
-      <VBox layoutY="408.0" prefHeight="77.0" prefWidth="500.0">
+      <VBox layoutY="408.0" prefHeight="60.0" prefWidth="500.0">
          <children>
-            <TextField prefHeight="0.0" prefWidth="389.0" promptText="Powtórz hasło" style="-fx-background-radius: 10;">
-               <VBox.margin>
-                  <Insets left="55.0" right="55.0" top="20.0" />
-               </VBox.margin>
+            <PasswordField fx:id="RepeatPasswordTextField" prefHeight="37.0" prefWidth="400.0" promptText="Powtórz hasło" style="-fx-background-radius: 10;">
                <font>
                   <Font size="18.0" />
                </font>
-            </TextField>
+               <VBox.margin>
+                  <Insets left="55.0" right="55.0" top="20.0" />
+               </VBox.margin>
+            </PasswordField>
          </children>
       </VBox>
-      <VBox layoutY="485.0" prefHeight="77.0" prefWidth="500.0">
+      <VBox layoutY="468.0" prefHeight="33.0" prefWidth="500.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="188.0" style="-fx-background-color: #BAF3FF; -fx-background-radius: 10;" text="Stwórz konto" textFill="WHITE">
+            <Label fx:id="errorMassageFillLabel" prefHeight="39.0" prefWidth="500.0" text="Hasła nie są identyczne." visible="false">
                <VBox.margin>
-                  <Insets bottom="15.0" left="150.0" right="150.0" top="10.0" />
+                  <Insets bottom="30.0" left="60.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutY="502.0" prefHeight="60.0" prefWidth="500.0">
+         <children>
+            <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#readFormValues" prefHeight="14.0" prefWidth="188.0" style="-fx-background-color: #BAF3FF; -fx-background-radius: 10;" text="Stwórz konto" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="150.0" right="150.0" />
                </VBox.margin>
                <font>
                   <Font size="18.0" />
@@ -96,7 +106,7 @@
             </Button>
          </children>
       </VBox>
-      <Hyperlink layoutX="183.0" layoutY="551.0" prefHeight="24.0" prefWidth="129.0" text="Mam już konto!" textFill="WHITE">
+      <Hyperlink fx:id="haveAccountButton" layoutX="183.0" layoutY="551.0" onAction="#changeToLoggingScene" prefHeight="24.0" prefWidth="129.0" text="Mam już konto!" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
