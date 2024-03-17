@@ -6,8 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.controller.PrimaryController;
+import org.example.controller.SceneManager;
+import org.example.controller.SecondaryController;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * JavaFX App
@@ -16,11 +21,20 @@ public class App extends Application {
 
     private static Stage primaryStage;
     private static Scene scene;
+    private static SceneManager sceneManager;
+
+    private PrimaryController primaryController;
+    private SecondaryController secondaryController;
+
 
     @Override
     public void start(Stage stage) throws IOException {
+        Set<String> fxmlStringSet = Set.of("primary.fxml", "library.fxml", "logging.fxml", "Registration.fxml");
+        sceneManager = SceneManager.getInstance(fxmlStringSet);
+
         primaryStage = stage;
-        scene = new Scene(loadFXML("primary"));
+        scene = sceneManager.getScene("logging");
+
         stage.setScene(scene);
         enableDragWindow(stage, scene);
         stage.initStyle(StageStyle.UNDECORATED);
@@ -28,13 +42,15 @@ public class App extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        scene = SceneManager.getInstance().getScene(fxml);
+        primaryStage.setScene(scene);
+        enableDragWindow(primaryStage, scene);
     }
     public static void closeStage() {primaryStage.close();}
     public static void minimizeStage() {primaryStage.setIconified(true);}
     public static void setFullScreenStage() {primaryStage.setFullScreen(!primaryStage.isFullScreen());}
 
-    private void enableDragWindow(Stage stage, Scene scene) {
+    private static void enableDragWindow(Stage stage, Scene scene) {
         final double[] xOffset = new double[1];
         final double[] yOffset = new double[1];
 
@@ -48,11 +64,6 @@ public class App extends Application {
             stage.setY(event.getScreenY() - yOffset[0]);
         });
     }
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
     public static void main(String[] args) {
         launch();
     }
