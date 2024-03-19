@@ -87,6 +87,10 @@
             </Button>
          </children>
       </HBox>
-      <ListView fx:id="listViewField" layoutY="76.0" prefHeight="534.0" prefWidth="898.0" />
+      <HBox layoutY="76.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+         <children>
+            <ListView fx:id="listViewField" prefHeight="501.0" prefWidth="898.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
