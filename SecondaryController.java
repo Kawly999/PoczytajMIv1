@@ -62,13 +62,27 @@ public class SecondaryController implements Controller, Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fileBar.fxml"));
         Node fileBar = loader.load(); // Ładuje Node, który jest elementem GUI
         FileBarController controller = loader.getController(); // Uzyskaj dostęp do kontrolera dla tego właśnie załadowanego elementu
+        ReadingController rc = (ReadingController) SceneManager.getInstance().getController("reading");
 
         // Uaktualnij kontroler za pomocą nowej nazwy pliku
         controller.updateData(selectedFile.getName(), selectedFile.length());
         list.add(fileBar);
         listViewField.setItems(list);
+        fileBar.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                try {
+                    switchToReading();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                rc.loadPDFFile(selectedFile.getAbsolutePath());
+            }
+        });
     }
 
+    private void switchToReading() throws IOException {
+        App.setRoot("reading");
+    }
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("primary");
