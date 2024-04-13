@@ -3,7 +3,7 @@ package org.example.controller;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-public class FileBarController implements Controller{
+public class FileBarController implements Controller {
     @FXML
     public Text filename;
 

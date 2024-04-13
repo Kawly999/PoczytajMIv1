@@ -32,10 +32,10 @@ public class SecondaryController implements Controller, Initializable {
     }
 
     public void setListView() {
-        listViewField.setCellFactory(new Callback<ListView<Node>, ListCell<Node>>() {
+        listViewField.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Node> call(ListView<Node> listView) {
-                return new ListCell<Node>() {
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(Node item, boolean empty) {
                         super.updateItem(item, empty);
@@ -75,7 +75,8 @@ public class SecondaryController implements Controller, Initializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                rc.loadPDFFile(selectedFile.getAbsolutePath());
+                rc.getPdfDocumentHandler().extractTextFromPDF(selectedFile.getAbsolutePath());
+                rc.getPdfDocumentHandler().loadPDFFile(selectedFile.getAbsolutePath());
             }
         });
     }
