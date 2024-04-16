@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.App;
 import org.example.model.DatabaseConnector;
+import org.example.model.SharedVariables;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 
 public class LoggingScene implements Controller {
     private final DatabaseConnector dbConnector = new DatabaseConnector();
+    private final SharedVariables sharedVariables = SharedVariables.getInstance();
     @FXML
     public Button logInButton;
     @FXML
@@ -24,13 +26,15 @@ public class LoggingScene implements Controller {
     public Label errorMassageLabel;
     @FXML
     public Hyperlink noAccHyperLink;
+    private String email = "";
 
     public void changeToRegistrationScene(ActionEvent e) throws IOException {
         App.setRoot("Registration");
     }
+    public void setEmailInSharedVariables() {sharedVariables.setEmail(email);}
     @FXML
     public void readLogInValues(ActionEvent e) throws IOException {
-        String email = emailTextField.getText();
+        email = emailTextField.getText();
         String password = passwordField.getText();
         PreparedStatement psCheckUserExists = null;
         ResultSet resultSet = null;
@@ -49,6 +53,7 @@ public class LoggingScene implements Controller {
                     errorMassageLabel.setText("Błędny email lub hasło!");
                     errorMassageLabel.setVisible(true);
                 }
+                setEmailInSharedVariables();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }

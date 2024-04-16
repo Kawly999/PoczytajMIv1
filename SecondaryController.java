@@ -22,9 +22,16 @@ import org.example.App;
 
 public class SecondaryController implements Controller, Initializable {
     @FXML
-    public ListView<Node> listViewField;
+    ListView<Node> listViewField;
+    private final ObservableList<Node> list;
 
-    public ObservableList<Node> list = FXCollections.observableArrayList();
+
+
+    public SecondaryController() {
+        list = FXCollections.observableArrayList();
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,6 +79,11 @@ public class SecondaryController implements Controller, Initializable {
             if (event.getClickCount() == 2) {
                 try {
                     switchToReading();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    rc.getPdfDocumentHandler().saveFileDataToDB(selectedFile);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
