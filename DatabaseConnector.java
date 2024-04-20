@@ -8,21 +8,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnector {
-    private Properties properties = new Properties();
-    public DatabaseConnector() {
-        loadProperties();
-    }
-    public void loadProperties() {
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("database.properties")) {
-            if (input == null) {
-                throw new IOException("Cannot find database.properties");
-            }
-            properties.load(input);
+    PropertiesLoader loader;
+    private Properties properties;
 
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public DatabaseConnector() {
+        this.loader = new PropertiesLoader("database.properties");
+        this.properties = loader.getProperties();
     }
+
     public Connection connect() {
         try {
             String url = properties.getProperty("database.url");
