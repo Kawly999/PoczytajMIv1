@@ -14,24 +14,24 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import org.example.App;
+import org.example.model.CloudStorageManager;
 
 public class SecondaryController implements Controller, Initializable {
     @FXML
     ListView<Node> listViewField;
     private final ObservableList<Node> list;
+    private CloudStorageManager csm;
 
-
-
-    public SecondaryController() {
+    public SecondaryController() throws IOException {
         list = FXCollections.observableArrayList();
-
+        csm = CloudStorageManager.getInstance();
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,10 +51,9 @@ public class SecondaryController implements Controller, Initializable {
                             setGraphic(null);
                         } else {
                             setPadding(Insets.EMPTY);
-                            // Upewnij się, że item jest typu Region lub jego podklasy, aby można było wywołać prefWidthProperty
                             if (item instanceof Region) {
                                 Region region = (Region) item;
-                                region.prefWidthProperty().bind(listView.widthProperty().subtract(2)); // Możesz zmienić wartość odejmowaną, aby zarezerwować miejsce na scrollbar
+                                region.prefWidthProperty().bind(listView.widthProperty().subtract(2));
                                 setGraphic(item);
                             }
                         }
@@ -63,6 +62,31 @@ public class SecondaryController implements Controller, Initializable {
             }
         });
     }
+    // metoda do wczytywania wszystkich plików pobranych z google cloud storage
+    public void addFileBarReadingGCS(File selectedFile) throws IOException {
+        // Załaduj FXML dla fileBar i jednocześnie utwórz instancję kontrolera
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fileBar.fxml"));
+        Node fileBar = loader.load(); // Ładuje Node, który jest elementem GUI
+        FileBarController controller = loader.getController();
+        ReadingController rc = (ReadingController) SceneManager.getInstance().getController("reading");
+
+        // Uaktualnij kontroler za pomocą nowej nazwy pliku
+        controller.updateData(selectedFile.getName(), selectedFile.length());
+        list.add(fileBar);
+        listViewField.setItems(list);
+        fileBar.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                try {
+                    switchToReading();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                rc.getPdfDocumentHandler().extractTextFromPDF(selectedFile.getAbsolutePath());
+                rc.getPdfDocumentHandler().loadPDFFile(selectedFile.getAbsolutePath());
+            }
+        });
+    }
+
 
     public void addFileBar(File selectedFile) throws IOException {
         // Załaduj FXML dla fileBar i jednocześnie utwórz instancję kontrolera
@@ -84,7 +108,8 @@ public class SecondaryController implements Controller, Initializable {
                 }
                 try {
                     rc.getPdfDocumentHandler().saveFileDataToDB(selectedFile);
-                } catch (IOException e) {
+                    csm.sendFileToCloudStorage(selectedFile);
+                } catch (IOException | SQLException e) {
                     throw new RuntimeException(e);
                 }
                 rc.getPdfDocumentHandler().extractTextFromPDF(selectedFile.getAbsolutePath());

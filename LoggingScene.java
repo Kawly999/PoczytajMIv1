@@ -2,20 +2,26 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import org.example.App;
+import org.example.model.CloudStorageManager;
 import org.example.model.DatabaseConnector;
 import org.example.model.SharedVariables;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class LoggingScene implements Controller {
     private final DatabaseConnector dbConnector = new DatabaseConnector();
     private final SharedVariables sharedVariables = SharedVariables.getInstance();
+    private CloudStorageManager cloudStorageManager = CloudStorageManager.getInstance();
+
     @FXML
     public Button logInButton;
     @FXML
@@ -27,6 +33,9 @@ public class LoggingScene implements Controller {
     @FXML
     public Hyperlink noAccHyperLink;
     private String email = "";
+
+    public LoggingScene() throws IOException {
+    }
 
     public void changeToRegistrationScene(ActionEvent e) throws IOException {
         App.setRoot("Registration");
@@ -48,6 +57,14 @@ public class LoggingScene implements Controller {
                 psCheckUserExists.setString(1, email);
                 resultSet = psCheckUserExists.executeQuery();
                 if (resultSet.isBeforeFirst()) {
+                    // dodawanie pobranych plików z GCS
+                    SecondaryController sc = (SecondaryController) SceneManager.getInstance().getController("library");
+                    List<String> downloadedFilePaths = cloudStorageManager.downloadFilesWithUserId();
+                    for (String filePath : downloadedFilePaths) {
+                        File file = new File(filePath);
+                        sc.addFileBarReadingGCS(file);
+                    }
+                    // zmiana sceny na główną
                     App.setRoot("primary");
                 } else {
                     errorMassageLabel.setText("Błędny email lub hasło!");
