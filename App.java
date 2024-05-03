@@ -23,10 +23,6 @@ public class App extends Application {
     private static Scene scene;
     private static SceneManager sceneManager;
 
-    private PrimaryController primaryController;
-    private SecondaryController secondaryController;
-
-
     @Override
     public void start(Stage stage) throws IOException {
         Set<String> fxmlStringSet = Set.of("primary.fxml", "library.fxml", "logging.fxml", "Registration.fxml", "fileBar.fxml", "reading.fxml");

@@ -2,7 +2,6 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import org.example.App;
 import org.example.model.CloudStorageManager;
@@ -34,7 +33,7 @@ public class LoggingScene implements Controller {
     public Hyperlink noAccHyperLink;
     private String email = "";
 
-    public LoggingScene() throws IOException {
+    public LoggingScene() {
     }
 
     public void changeToRegistrationScene(ActionEvent e) throws IOException {

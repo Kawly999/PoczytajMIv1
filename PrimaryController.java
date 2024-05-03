@@ -2,7 +2,6 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
@@ -13,11 +12,9 @@ import java.io.IOException;
 
 public class PrimaryController implements Controller {
     @FXML
-    public TextArea textArea; // pole tekstowe zdefiniowane w FXML
-    public Button closeButton;
+    public TextArea textArea;
     @FXML
     public Button addPdfButton;
-    private Parent root;
     public void addPdf(ActionEvent e) throws IOException {
         SecondaryController sc = (SecondaryController)SceneManager.getInstance().getController("library");
 

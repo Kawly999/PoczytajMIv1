@@ -52,12 +52,12 @@ public class RegistrationScene implements Controller {
         ) {
             errorMassageFillLabel.setText("Wszystkie pola muszą być wypełnione.");
             errorMassageFillLabel.setVisible(true);
-        }  // wyświetl błąd
+        }
         else if (!password.equals(repeatPassword)) {
             // Hasła nie są takie same, pokazujemy błąd
             errorMassageFillLabel.setText("Hasła nie są identyczne.");
-            errorMassageFillLabel.setVisible(true); // Robimy etykietę widoczną
-        } // wyświetl błąd
+            errorMassageFillLabel.setVisible(true);
+        }
         else {
             try (Connection connection = dbConnector.connect()) {
                 psCheckUserExists = connection.prepareStatement("Select * FROM users WHERE email = ?");

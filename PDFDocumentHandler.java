@@ -8,7 +8,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.example.controller.LoggingScene;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +26,6 @@ public class PDFDocumentHandler {
     private ObservableList<ImageView> pages;
     private ObservableList<String> pagesOfText;
     private DatabaseConnector dbConnector;
-    private LoggingScene loggingScene;
 
     public PDFDocumentHandler(ObservableList<ImageView> pages, ObservableList<String> pagesOfText) {
         this.pages = pages;
@@ -166,7 +164,7 @@ public class PDFDocumentHandler {
         }
         loadTasksImage.clear(); // Wyczyść listę zadań
 
-        // Opcjonalnie: zamknij i wyczyść obecny dokument
+        // zamknij i wyczyść obecny dokument
         if (document != null) {
             try {
                 document.close();
