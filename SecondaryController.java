@@ -5,41 +5,40 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import java.io.File;
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import org.example.App;
 import org.example.model.CloudStorageManager;
 
-public class SecondaryController implements Controller, Initializable {
+public class SecondaryController implements Controller {
     @FXML
-    ListView<Node> listViewField;
+    ListView<Node> listView;
     private final ObservableList<Node> list;
-    private CloudStorageManager csm;
+    private final CloudStorageManager csm;
 
     public SecondaryController() throws IOException {
         list = FXCollections.observableArrayList();
         csm = CloudStorageManager.getInstance();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         setListView();
     }
 
     public void setListView() {
-        listViewField.setCellFactory(new Callback<>() {
+        listView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Node> call(ListView<Node> listView) {
                 return new ListCell<>() {
@@ -62,18 +61,31 @@ public class SecondaryController implements Controller, Initializable {
             }
         });
     }
+
+
+    @FXML
+    public void addFolder() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/folderBar.fxml"));
+        Node folderBar = loader.load(); // Ładuje customowy node
+        FolderBarController controller = loader.getController();
+        ReadingController rc = (ReadingController) SceneManager.getInstance().getController("reading");
+
+        list.add(folderBar);
+        listView.setItems(list);
+    }
+
     // metoda do wczytywania wszystkich plików pobranych z google cloud storage
     public void addFileBarReadingGCS(File selectedFile) throws IOException {
         // Załaduj FXML dla fileBar i jednocześnie utwórz instancję kontrolera
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fileBar.fxml"));
-        Node fileBar = loader.load(); // Ładuje Node, który jest elementem GUI
+        Node fileBar = loader.load(); // Ładuje customowy node
         FileBarController controller = loader.getController();
         ReadingController rc = (ReadingController) SceneManager.getInstance().getController("reading");
 
         // Uaktualnij kontroler za pomocą nowej nazwy pliku
         controller.updateData(selectedFile.getName(), selectedFile.length());
         list.add(fileBar);
-        listViewField.setItems(list);
+        listView.setItems(list);
         fileBar.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 try {
@@ -91,14 +103,14 @@ public class SecondaryController implements Controller, Initializable {
     public void addFileBar(File selectedFile) throws IOException {
         // Załaduj FXML dla fileBar i jednocześnie utwórz instancję kontrolera
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fileBar.fxml"));
-        Node fileBar = loader.load(); // Ładuje Node, który jest elementem GUI
+        Node fileBar = loader.load(); // Ładuje customowy node
         FileBarController controller = loader.getController(); // Uzyskaj dostęp do kontrolera dla tego właśnie załadowanego elementu
         ReadingController rc = (ReadingController) SceneManager.getInstance().getController("reading");
 
         // Uaktualnij kontroler za pomocą nowej nazwy pliku
         controller.updateData(selectedFile.getName(), selectedFile.length());
         list.add(fileBar);
-        listViewField.setItems(list);
+        listView.setItems(list);
         fileBar.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 try {

@@ -19,7 +19,7 @@ import java.util.List;
 public class LoggingScene implements Controller {
     private final DatabaseConnector dbConnector = new DatabaseConnector();
     private final SharedVariables sharedVariables = SharedVariables.getInstance();
-    private CloudStorageManager cloudStorageManager = CloudStorageManager.getInstance();
+    private final CloudStorageManager cloudStorageManager = CloudStorageManager.getInstance();
 
     @FXML
     public Button logInButton;

@@ -3,18 +3,75 @@ package org.example.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import org.example.App;
+import org.example.view.ChangePrimarySceneTheme;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrimaryController implements Controller {
+    // Hbox
+    @FXML
+    public HBox h1;
+    @FXML
+    public HBox h2;
+    @FXML
+    public HBox h3;
+    @FXML
+    public HBox h4;
+    @FXML
+    public HBox h5;
+    @FXML
+    public HBox h6;
+    // Przyciski
+    @FXML
+    public ToggleButton toggleButton;
+    @FXML
+    public Button addPdfButton;
+    @FXML
+    public Button arrowUp;
+    @FXML
+    public Button arrowDown;
+    // Fonty
+    @FXML
+    public MenuItem Arial;
+    @FXML
+    public MenuItem Times;
+    @FXML
+    public MenuItem Verdana;
+    @FXML
+    public MenuItem Helvetica;
+    @FXML
+    public MenuItem Calibri;
+
+
+
     @FXML
     public TextArea textArea;
     @FXML
-    public Button addPdfButton;
+    public AnchorPane anchorPane;
+    @FXML
+    public Circle circle;
+    public Map<String, HBox> hBoxMap = new HashMap<>();
+    private ChangePrimarySceneTheme changePrimarySceneTheme;
+
+    public void initialize() {
+        // konstruktor nie ma dostępu do pól @FXML
+        hBoxMap = Map.of("h1", h1, "h2", h2, "h3", h3, "h4", h4, "h5", h5, "h6", h6);
+
+        anchorPane.getStylesheets().add(getClass().getResource("/button.css").toExternalForm());
+        toggleButton.getStyleClass().add("button-light");
+    }
     public void addPdf(ActionEvent e) throws IOException {
         SecondaryController sc = (SecondaryController)SceneManager.getInstance().getController("library");
 
@@ -24,7 +81,7 @@ public class PrimaryController implements Controller {
         if (selectedFile != null) {
             sc.addFileBar(selectedFile);
             switchToLibrary();
-            sc.listViewField.refresh();
+            sc.listView.refresh();
         } else {
             System.out.println("File is not valid");
         }
@@ -42,6 +99,34 @@ public class PrimaryController implements Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void increaseFontSize(ActionEvent e) {
+        if (textArea.getFont().getSize() <= 72) {
+            textArea.setFont(Font.font(textArea.getFont().getSize() + 2));
+        }
+    }
+    @FXML
+    private void decreaseFontSize(ActionEvent e) {
+        if (textArea.getFont().getSize() >= 8) {
+            textArea.setFont(Font.font(textArea.getFont().getSize() - 2));
+        }
+    }
+    @FXML
+    private void setArial(ActionEvent e) {textArea.setFont(Font.font("Arial"));}
+    @FXML
+    private void setTimes(ActionEvent e) {textArea.setFont(Font.font("Times New Roman"));}
+    @FXML
+    private void setVerdana(ActionEvent e) {textArea.setFont(Font.font("Verdana"));}
+    @FXML
+    private void setHelvetica(ActionEvent e) {textArea.setFont(Font.font("Helvetica"));}
+    @FXML
+    private void setCalibri(ActionEvent e) {textArea.setFont(Font.font("Calibri"));}
+
+    @FXML
+    private void toggleSceneColor() {
+        ChangePrimarySceneTheme.setThemeOnTButton(hBoxMap, toggleButton, anchorPane, circle);
     }
     @FXML
     private void close(ActionEvent e) {

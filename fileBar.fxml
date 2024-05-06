@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,27 +14,54 @@
    <children>
       <HBox prefHeight="57.0" prefWidth="600.0" style="-fx-background-color: #D1415180;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+            <HBox HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" top="10.0" />
                </HBox.margin>
-               <image>
-                  <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/sheet.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="filename" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="333.13671875">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/sheet.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-            <Text fx:id="fileSize" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="150.13671875">
+               <children>
+                  <Text fx:id="filename" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="333.13671875">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="10.0" top="15.0" />
                </HBox.margin>
-            </Text>
+               <children>
+                  <Text fx:id="fileSize" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="150.13671875" />
+               </children>
+            </HBox>
+            <HBox prefHeight="57.0" prefWidth="23.0" HBox.hgrow="NEVER">
+               <children>
+                  <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="10.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </MenuButton>
+               </children>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </HBox>
          </children>
       </HBox>
    </children>

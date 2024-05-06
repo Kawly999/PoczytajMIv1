@@ -2,7 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,61 +39,85 @@
                   </Text>
                </children>
             </HBox>
-            <HBox prefHeight="42.0" prefWidth="356.0" HBox.hgrow="ALWAYS" />
+            <HBox prefHeight="42.0" prefWidth="356.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <ButtonBar prefHeight="49.0" prefWidth="355.0">
+                    <buttons>
+                      <Button minWidth="46.0" mnemonicParsing="false" onAction="#addFolder" prefHeight="25.0" prefWidth="107.0" text="Stwórz Folder" />
+                        <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="Sortuj">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                    </buttons>
+                  </ButtonBar>
+               </children></HBox>
          </children>
       </HBox>
-      <HBox prefHeight="25.0" prefWidth="117.0" AnchorPane.leftAnchor="0.0">
+      <HBox AnchorPane.bottomAnchor="581.6666666666666" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="25.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/mother2.png" />
-               </image>
-            </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PoczytajMI" wrappingWidth="82.90749740600586">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets top="2.0" />
-               </HBox.margin>
-            </Text>
-         </children>
-      </HBox>
-      <HBox layoutX="114.0" prefHeight="22.0" prefWidth="681.0" />
-      <HBox layoutX="797.0" prefHeight="27.0" prefWidth="103.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#minimize" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+            <HBox prefHeight="25.0" prefWidth="117.0" HBox.hgrow="NEVER">
+               <children>
+                  <ImageView fitHeight="25.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/minus-sign.png" />
+                        <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/mother2.png" />
                      </image>
                   </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#setFullScreen" prefHeight="25.0" prefWidth="41.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="14.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/expand%20(1).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#close" prefHeight="21.0" prefWidth="9.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/close-window.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PoczytajMI" wrappingWidth="82.90749740600586">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="22.0" prefWidth="681.0" HBox.hgrow="ALWAYS" />
+            <HBox prefHeight="27.0" prefWidth="103.0" HBox.hgrow="NEVER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#minimize" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/minus-sign.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#setFullScreen" prefHeight="25.0" prefWidth="41.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/expand%20(1).png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#close" prefHeight="21.0" prefWidth="9.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/close-window.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </HBox>
       <HBox layoutY="76.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <children>
-            <ListView fx:id="listViewField" prefHeight="501.0" prefWidth="898.0" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="listView" prefHeight="501.0" prefWidth="898.0" HBox.hgrow="ALWAYS">
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu></ListView>
          </children>
       </HBox>
    </children>
