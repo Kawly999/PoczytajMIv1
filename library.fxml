@@ -46,8 +46,8 @@
                       <Button minWidth="46.0" mnemonicParsing="false" onAction="#addFolder" prefHeight="25.0" prefWidth="107.0" text="Stwórz Folder" />
                         <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="Sortuj">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                            <MenuItem fx:id="MIAlfabetic" mnemonicParsing="false" onAction="#sortListViewAlphabetically" text="Alfabetycznie" />
+                            <MenuItem fx:id="MIOldest" mnemonicParsing="false" onAction="#sortListViewByDate" text="Od najstarszych" />
                           </items>
                         </MenuButton>
                     </buttons>

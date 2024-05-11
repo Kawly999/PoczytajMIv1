@@ -25,7 +25,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Set<String> fxmlStringSet = Set.of("primary.fxml", "library.fxml", "logging.fxml", "Registration.fxml", "fileBar.fxml", "reading.fxml");
+        Set<String> fxmlStringSet = Set.of("primary.fxml", "library.fxml", "logging.fxml", "Registration.fxml", "fileBar.fxml", "reading.fxml", "folderBar.fxml");
         sceneManager = SceneManager.getInstance(fxmlStringSet);
 
         primaryStage = stage;
