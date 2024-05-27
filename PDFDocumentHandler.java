@@ -21,11 +21,11 @@ public class PDFDocumentHandler {
 
     private PDDocument document;
     private PDFRenderer renderer;
-    private List<Task<ImageView>> loadTasksImage = new ArrayList<>();
-    private List<Task<String>> loadTasksText = new ArrayList<>();
-    private ObservableList<ImageView> pages;
-    private ObservableList<String> pagesOfText;
-    private DatabaseConnector dbConnector;
+    private final List<Task<ImageView>> loadTasksImage = new ArrayList<>();
+    private final List<Task<String>> loadTasksText = new ArrayList<>();
+    private final ObservableList<ImageView> pages;
+    private final ObservableList<String> pagesOfText;
+    private final DatabaseConnector dbConnector;
 
     public PDFDocumentHandler(ObservableList<ImageView> pages, ObservableList<String> pagesOfText) {
         this.pages = pages;

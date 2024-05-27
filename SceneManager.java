@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class SceneManager {
-    private Map<String, Scene> scenes = new HashMap<>();
-    private Map<String, Controller> controllers = new HashMap<>();
+    private final Map<String, Scene> scenes = new HashMap<>();
+    private final Map<String, Controller> controllers = new HashMap<>();
     private static SceneManager instance;
 
     private SceneManager(Set<String> fxmlSet) throws IOException {
@@ -29,7 +29,7 @@ public class SceneManager {
         scenes.put(sceneId, scene);
         controllers.put(sceneId, controller);
     }
-    public static SceneManager getInstance() throws IOException {
+    public static SceneManager getInstance() {
         return instance;
     }
     public static SceneManager getInstance(Set<String> fxmlSet) throws IOException {
@@ -38,12 +38,10 @@ public class SceneManager {
         }
         return instance;
     }
-
     public Scene getScene(String filename) {
         return scenes.get(filename);
     }
     public Controller getController(String filename) {
         return controllers.get(filename);
     }
-
 }

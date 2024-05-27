@@ -11,23 +11,27 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.example.App;
 import org.example.model.PDFDocumentHandler;
+import org.example.model.SpeechManager;
 
 import java.io.IOException;
 
 public class ReadingController implements Controller {
-
-    @FXML
-    private Button playButton;
-
-    @FXML
-    private ListView<ImageView> listView;
     private final ObservableList<ImageView> pages = FXCollections.observableArrayList();
     private final ObservableList<String> pagesOfText = FXCollections.observableArrayList();
     private final PDFDocumentHandler pdfDocumentHandler = new PDFDocumentHandler(pages, pagesOfText);
-    private Process speechProcess = null;
+    private final SpeechManager sm = SpeechManager.getInstance();
+    @FXML
+    public Button playButton;
+    @FXML
+    private ListView<ImageView> listView;
 
     public void initialize() {
         listView.setItems(pages);
+        defineCellFactory();
+        choosePageListener();
+    }
+
+    private void defineCellFactory() {
         listView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<ImageView> call(ListView<ImageView> listView) {
@@ -44,6 +48,8 @@ public class ReadingController implements Controller {
                 };
             }
         });
+    }
+    private void choosePageListener() {
         listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // indeks strony
@@ -55,33 +61,12 @@ public class ReadingController implements Controller {
     public PDFDocumentHandler getPdfDocumentHandler() {
         return pdfDocumentHandler;
     }
-    private void readText(String text) {
-        // Zatrzymaj aktualnie mówiący proces, jeśli istnieje
-        if (speechProcess != null) {
-            speechProcess.destroy();
-            speechProcess = null;
-            return; // Przerywamy dalsze wykonywanie metody, jeśli zatrzymujemy odczyt
-        }
-
-        new Thread(() -> {
-            try {
-                String command = "\"C:\\Program Files\\eSpeak NG\\espeak-ng.exe\" -v pl \"" + text + "\"";
-                speechProcess = Runtime.getRuntime().exec(command);
-                speechProcess.waitFor(); // Czekaj na zakończenie procesu
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                speechProcess = null; // Wyczyść referencję po zakończeniu procesu
-            }
-        }).start();
-    }
-
     @FXML
     private void playButtonAction(ActionEvent e) {
         int selectedIndex = listView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < pagesOfText.size()) {
             String textToRead = pagesOfText.get(selectedIndex + 1);
-            readText(textToRead);
+//            sm.readText(textToRead);
         }
     }
     @FXML
@@ -101,6 +86,4 @@ public class ReadingController implements Controller {
         pdfDocumentHandler.cleanupBeforeLoadingNewFile(); // Anuluj trwające zadania i wyczyść listę przed ładowaniem nowego pliku
         App.setRoot("library");
     }
-
-
 }

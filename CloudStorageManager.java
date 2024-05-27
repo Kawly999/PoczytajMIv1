@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Properties;
 
 public class CloudStorageManager  {
-    private Storage storage;
-    private String bucketName;
-    private DatabaseConnector dbConnector;
+    private final Storage storage;
+    private final String bucketName;
+    private final DatabaseConnector dbConnector;
     PropertiesLoader loader;
     private static CloudStorageManager instance;
 
@@ -75,12 +75,10 @@ public class CloudStorageManager  {
         return storage.create(blobInfo, content);
     }
     // pobieranie plików i zapisywanie scieżek do nich w liscie
-    public List<String> downloadFilesWithUserId() throws IOException, SQLException {
+    public List<String> downloadFilesWithUserId() throws SQLException {
         int user_id = getUserId();
         List<String> downloadedFiles = new ArrayList<>();
-        System.out.println("chiwla przed trangedia");
         Bucket bucket = storage.get(bucketName);
-        System.out.println("chiwla po trangedi");
 
         try {
             if (bucket != null && bucket.list().iterateAll().iterator().hasNext()) {

@@ -1,7 +1,6 @@
 package org.example.view;
 
 import javafx.animation.*;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -19,6 +18,7 @@ public class ChangePrimarySceneTheme {
         TranslateTransition translate = new TranslateTransition(Duration.seconds(0.5), circle);
         FillTransition fillTransition = new FillTransition(Duration.seconds(0.5), circle);
         if (toggleButton.getStyleClass().contains("button-light")) {
+            toggleButton.setDisable(true);
             toggleButton.getStyleClass().remove("button-light");
             toggleButton.getStyleClass().add("button-dark");
 
@@ -28,12 +28,16 @@ public class ChangePrimarySceneTheme {
             translate.setByX(30);
 
             animateButtonBackgroundColor(toggleButton, Color.WHITE, Color.rgb(73, 117, 159, 1));
+
+            translate.setOnFinished(e -> toggleButton.setDisable(false));
+
             translate.play();
             fillTransition.play();
-//            anchorPane.setBackground(Background.fill(Color.rgb(25, 25, 25, 0.8)));
             List<HBox> collect = getBoxList(hBoxMap);
             for (var h : collect) { h.setBackground(Background.fill(Color.rgb(25, 25, 25, 0.9))); }
+
         } else {
+            toggleButton.setDisable(true);
             toggleButton.getStyleClass().remove("button-dark");
             toggleButton.getStyleClass().add("button-light");
 
@@ -42,6 +46,9 @@ public class ChangePrimarySceneTheme {
 
             translate.setByX(-30);
             animateButtonBackgroundColor(toggleButton, Color.rgb(73, 117, 159, 1), Color.WHITE);
+
+            translate.setOnFinished(e -> toggleButton.setDisable(false));
+
             translate.play();
             fillTransition.play();
             anchorPane.setBackground(Background.fill(Color.rgb(234, 252, 248, 0.5)));

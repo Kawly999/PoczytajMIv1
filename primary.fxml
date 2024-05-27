@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -17,7 +18,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="898.0" style="-fx-background-color: #BDF8E950;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.PrimaryController">
    <children>
@@ -76,7 +76,32 @@
       </HBox>
       <HBox fx:id="h2" layoutX="-1.0" layoutY="27.0" prefHeight="49.0" prefWidth="898.0" style="-fx-background-color: #C0C0C0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <HBox prefHeight="49.0" prefWidth="376.0" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="376.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <GridPane prefHeight="65.0" prefWidth="36.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.66668701171875" minHeight="10.0" prefHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="39.666656494140625" minHeight="7.999979654947914" prefHeight="14.333333333333336" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="speed" prefHeight="0.0" prefWidth="38.0" style="-fx-background-color: transparent;" GridPane.rowIndex="1" />
+                        <ImageView fitHeight="23.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/speedometer.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets left="7.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
+                  </GridPane>
+               </children></HBox>
             <HBox prefHeight="49.0" prefWidth="169.0" HBox.hgrow="NEVER">
                <children>
                   <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
@@ -128,14 +153,43 @@
             </HBox>
             <HBox prefHeight="42.0" prefWidth="356.0" HBox.hgrow="ALWAYS">
                <children>
-                  <ToggleButton fx:id="toggleButton" mnemonicParsing="false" onAction="#toggleSceneColor" prefHeight="30.0" prefWidth="60.0" textAlignment="CENTER">
-                     <HBox.margin>
-                        <Insets left="200.0" top="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <Circle fx:id="circle" fill="#49759f" radius="11.0" strokeType="INSIDE" translateX="-15.0" />
-                     </graphic>
-                  </ToggleButton>
+                  <GridPane prefHeight="19.0" prefWidth="253.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="61.000057220458984" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.99994277954102" minWidth="10.0" prefWidth="108.99994277954102" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="43.66665267944336" minHeight="10.0" prefHeight="32.33332316080729" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="27.66668701171875" minHeight="6.333347320556641" prefHeight="16.333343505859375" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" onAction="#toggleSceneColor" prefHeight="19.0" prefWidth="60.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <graphic>
+                              <Circle fx:id="circle" fill="#49759f" radius="11.0" strokeType="INSIDE" translateX="-15.0" />
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets bottom="30.0" />
+                           </GridPane.margin>
+                        </ToggleButton>
+                        <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/C:/Users/karat/IdeaProjects/PoczytajMIv1/src/main/java/org/example/resources/change%20(1).png" />
+                           </image>
+                        </ImageView>
+                        <MenuButton fx:id="MBJ" mnemonicParsing="false" prefHeight="4.0" prefWidth="42.0" style="-fx-background-color: transparent;" GridPane.rowIndex="1">
+                          <items>
+                            <MenuItem fx:id="PLM" mnemonicParsing="false" text="Polski M" />
+                            <MenuItem fx:id="PLK" mnemonicParsing="false" text="Polski K" />
+                              <MenuItem fx:id="ANGM" mnemonicParsing="false" text="Angielski US M" />
+                              <MenuItem fx:id="ANGK" mnemonicParsing="false" text="Angielski US K" />
+                          </items>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </MenuButton>
+                     </children>
+                  </GridPane>
                </children>
             </HBox>
          </children>
@@ -161,7 +215,7 @@
       <HBox fx:id="h6" layoutY="565.0" prefHeight="59.0" prefWidth="898.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <HBox alignment="BOTTOM_LEFT" prefHeight="69.0" prefWidth="390.0" HBox.hgrow="ALWAYS" />
-            <HBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="187.0" style="-fx-background-color: #E9E9E9;" HBox.hgrow="NEVER">
+            <HBox alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="271.0" style="-fx-background-color: #E9E9E9;" HBox.hgrow="NEVER">
                <children>
                   <Button fx:id="addPdfButton" mnemonicParsing="false" onAction="#addPdf" prefHeight="42.0" prefWidth="35.0" style="-fx-background-color: transparent;" HBox.hgrow="NEVER">
                      <graphic>
@@ -222,6 +276,24 @@
                         <Insets bottom="5.0" left="3.0" />
                      </HBox.margin>
                   </MenuButton>
+                  <GridPane prefHeight="42.0" prefWidth="58.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.0" minWidth="10.0" prefWidth="42.33331489562988" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="23.666685104370117" minWidth="0.0" prefWidth="15.666685104370117" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  Zegar" />
+                        <TextField fx:id="clock" prefHeight="25.0" prefWidth="31.0" promptText="0" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" s." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
                </children>
                <HBox.margin>
                   <Insets top="10.0" />

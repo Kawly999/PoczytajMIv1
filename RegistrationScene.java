@@ -41,9 +41,6 @@ public class RegistrationScene implements Controller {
         String email = EmailTextField.getText();
         String password = PasswordTextField.getText();
         String repeatPassword = RepeatPasswordTextField.getText();
-        PreparedStatement psCheckUserExists = null;
-        PreparedStatement psInsert = null;
-        ResultSet resultSet = null;
         if (name.isEmpty()
                 || lastName.isEmpty()
                 || email.isEmpty()
@@ -59,28 +56,35 @@ public class RegistrationScene implements Controller {
             errorMassageFillLabel.setVisible(true);
         }
         else {
-            try (Connection connection = dbConnector.connect()) {
-                psCheckUserExists = connection.prepareStatement("Select * FROM users WHERE email = ?");
-                psCheckUserExists.setString(1, email);
-                resultSet = psCheckUserExists.executeQuery();
+            register(email, name, lastName, password);
+        }
+    }
 
-                if (resultSet.isBeforeFirst()) {
-                    System.out.println("Taki email już istnieje");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Nie możesz użyć tego adresu email.");
-                } else {
-                    psInsert = connection.prepareStatement("INSERT INTO users (first_name, last_name, password_hash, email) VALUES (?, ?, ?, ?)");
-                    psInsert.setString(1, name);
-                    psInsert.setString(2, lastName);
-                    psInsert.setString(3, password);
-                    psInsert.setString(4, email);
-                    psInsert.executeUpdate();
-                    App.setRoot("logging");
-                }
+    private void register(String email, String name, String lastName, String password) throws IOException {
+        PreparedStatement psInsert;
+        PreparedStatement psCheckUserExists;
+        ResultSet resultSet;
+        try (Connection connection = dbConnector.connect()) {
+            psCheckUserExists = connection.prepareStatement("Select * FROM users WHERE email = ?");
+            psCheckUserExists.setString(1, email);
+            resultSet = psCheckUserExists.executeQuery();
 
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            if (resultSet.isBeforeFirst()) {
+                System.out.println("Taki email już istnieje");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Nie możesz użyć tego adresu email.");
+            } else {
+                psInsert = connection.prepareStatement("INSERT INTO users (first_name, last_name, password_hash, email) VALUES (?, ?, ?, ?)");
+                psInsert.setString(1, name);
+                psInsert.setString(2, lastName);
+                psInsert.setString(3, password);
+                psInsert.setString(4, email);
+                psInsert.executeUpdate();
+                App.setRoot("logging");
             }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

@@ -2,16 +2,16 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import org.example.App;
+import org.example.model.SpeechManager;
 import org.example.view.ChangePrimarySceneTheme;
 
 import java.io.File;
@@ -42,6 +42,8 @@ public class PrimaryController implements Controller {
     public Button arrowUp;
     @FXML
     public Button arrowDown;
+    @FXML
+    public MenuButton MBJ;
     // Fonty
     @FXML
     public MenuItem Arial;
@@ -53,17 +55,23 @@ public class PrimaryController implements Controller {
     public MenuItem Helvetica;
     @FXML
     public MenuItem Calibri;
-
-
-
+    // Pozostałe
+    @FXML
+    public TextField clock;
     @FXML
     public TextArea textArea;
     @FXML
     public AnchorPane anchorPane;
     @FXML
     public Circle circle;
+    @FXML
+    public TextField speed;
     public Map<String, HBox> hBoxMap = new HashMap<>();
-    private ChangePrimarySceneTheme changePrimarySceneTheme;
+    private final SpeechManager sm = SpeechManager.getInstance();
+    private String readingSpeed;
+    private String language;
+    private String gender;
+    private String dialect;
 
     public void initialize() {
         // konstruktor nie ma dostępu do pól @FXML
@@ -71,6 +79,8 @@ public class PrimaryController implements Controller {
 
         anchorPane.getStylesheets().add(getClass().getResource("/button.css").toExternalForm());
         toggleButton.getStyleClass().add("button-light");
+        setSpeed();
+        setLanguage();
     }
     public void addPdf(ActionEvent e) throws IOException {
         SecondaryController sc = (SecondaryController)SceneManager.getInstance().getController("library");
@@ -90,15 +100,58 @@ public class PrimaryController implements Controller {
     @FXML
     public void play(ActionEvent e) {
         String text = textArea.getText();
-        readText(text);
+        String timer = clock.getText();
+        sm.readText(text, readingSpeed, language, dialect, gender, timer);
     }
-    private void readText(String text) {
-        try {
-            String command = "\"C:\\Program Files\\eSpeak NG\\espeak-ng.exe\" -v pl \"" + text + "\"";
-            Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    public void setLanguage() {
+        final String[] id = new String[1];
+        language = "pl";
+        dialect = "";
+        gender = "m1";
+        for (int i = 0; i < MBJ.getItems().size(); i++) {
+            MenuItem item = MBJ.getItems().get(i);
+            item.setOnAction((e) -> {
+                id[0] = item.getId();
+                switch (id[0]) {
+                    case "PLM": {
+                        language = "pl";
+                        dialect = "";
+                        gender = "m1";
+                        break;
+                    }
+                    case "PLK": {
+                        language = "pl";
+                        dialect = "";
+                        gender = "f1";
+                        break;
+                    }
+                    case "ANGM": {
+                        language = "en";
+                        dialect = "us";
+                        gender = "m1";
+                        break;
+                    }
+                    case "ANGK": {
+                        language = "en";
+                        dialect = "us";
+                        gender = "f1";
+                        break;
+                    }
+                }
+            });
         }
+    }
+
+    public void setSpeed() {
+        speed.setText("175");
+        speed.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String readingSpeed = speed.getText();
+                speed.setText(readingSpeed);
+                this.readingSpeed = readingSpeed;
+            }
+        });
     }
 
     @FXML
@@ -113,6 +166,7 @@ public class PrimaryController implements Controller {
             textArea.setFont(Font.font(textArea.getFont().getSize() - 2));
         }
     }
+
     @FXML
     private void setArial(ActionEvent e) {textArea.setFont(Font.font("Arial"));}
     @FXML

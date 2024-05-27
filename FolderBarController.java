@@ -17,8 +17,12 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.util.Date;
 
-
 public class FolderBarController extends BarController implements Controller {
+    public int filesCounter = 0;
+    public Date date;
+    private final ObservableMap<Integer, File> files = FXCollections.observableHashMap();
+    @FXML
+    private StackPane stackPane;
     @FXML
     private Text folderName;
     @FXML
@@ -26,62 +30,37 @@ public class FolderBarController extends BarController implements Controller {
     @FXML
     public ContextMenu contextMenu;
     @FXML
-    private StackPane stackPane;
-    public int fileCounter = 0;
-    public Date crateDate;
-
-    private final ObservableMap<Integer, File> files = FXCollections.observableHashMap();
     private TextField textFieldFolderName;
     @FXML
     public AnchorPane folderBar;
 
     @FXML
     public void initialize() {
-        crateDate = new Date();
+        date = new Date();
         textFieldFolderName = new TextField();
         stackPane.getChildren().add(textFieldFolderName);
         textFieldFolderName.setVisible(false);
+        folderName.setOnMouseClicked(e -> activateTextField());
+        acceptNewFolderName();
+        openFilesListInFolder();
+    }
 
+    private void acceptNewFolderName() {
         textFieldFolderName.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 updateText();
             }
         });
-
-        folderName.setOnMouseClicked(e -> activateTextField());
-
-        openFilesListInFolder();
-    }
-
-    public String getName() {
-        return folderName.getText();
-    }
-
-    @Override
-    public Date getDate() {
-        return null;
-    }
-
-    public ContextMenu getContextMenu() {
-        return contextMenu;
-    }
-    public ObservableMap<Integer, File> getFiles() {
-        return files;
     }
 
     public void setNewMenuItem(FileBarController newMenuItem) {
-        files.put(fileCounter, newMenuItem.getFile());
+        files.put(filesCounter, newMenuItem.getFile());
         MenuItem menuItem = new MenuItem(newMenuItem.getName());
-        menuItem.setId(String.valueOf(fileCounter));
-        fileCounter++;
+        menuItem.setId(String.valueOf(filesCounter));
+        filesCounter++;
         contextMenu.getItems().add(menuItem);
     }
-
-    @Override
-    public Node getStructure() {
-        return folderBar;
-    }
-
+    // ustawienie, aby listę plików w folderze można było otworzyć prawym klawiszem myszy (domyślnie lewym) 
     private void openFilesListInFolder() {
         folderListButton.setOnMouseClicked( e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -89,19 +68,36 @@ public class FolderBarController extends BarController implements Controller {
             }
         });
     }
-
+    // zamiana widoczności nodów z tekstu na pole z możliwościa wpisywania
     private void activateTextField() {
         textFieldFolderName.setText(folderName.getText());
         textFieldFolderName.setVisible(true);
         folderName.setVisible(false);
         textFieldFolderName.requestFocus(); // ustawia fokus, czyli input klawiatury na textField
     }
-
     private void updateText() {
         if (!textFieldFolderName.getText().isEmpty()) {
             folderName.setText(textFieldFolderName.getText());
         }
         textFieldFolderName.setVisible(false);
         folderName.setVisible(true);
+    }
+    public String getName() {
+        return folderName.getText();
+    }
+    @Override
+    public Date getDate() {
+        return date;
+    }
+    // pobiera główny Node/Pane w celu ustawienia wyglądu 
+    @Override
+    public Node getStructure() {
+        return folderBar;
+    }
+    public ContextMenu getContextMenu() {
+        return contextMenu;
+    }
+    public ObservableMap<Integer, File> getFiles() {
+        return files;
     }
 }
