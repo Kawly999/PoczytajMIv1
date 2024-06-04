@@ -99,8 +99,8 @@ public class PDFDocumentHandler {
                             return null;
                         }
                         PDFTextStripper stripper = new PDFTextStripper();
-                        stripper.setStartPage(pageIndex);
-                        stripper.setEndPage(pageIndex);
+                        stripper.setStartPage(pageIndex + 1);
+                        stripper.setEndPage(pageIndex + 1);
                         return stripper.getText(document);
                     }
                 };
