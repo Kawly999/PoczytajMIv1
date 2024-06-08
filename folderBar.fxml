@@ -63,7 +63,7 @@
                <children>
                   <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" style="-fx-background-color: transparent;">
                      <items>
-                        <MenuItem fx:id="FolderMI2" mnemonicParsing="false" text="Usuń" />
+                        <MenuItem fx:id="deleteItem" mnemonicParsing="false" text="Usuń" />
                      </items>
                   </MenuButton>
                </children>

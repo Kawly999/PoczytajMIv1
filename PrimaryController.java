@@ -44,6 +44,12 @@ public class PrimaryController implements Controller {
     public Button arrowDown;
     @FXML
     public MenuButton MBJ;
+    @FXML
+    public Button moveLeftButton;
+    @FXML
+    public Button moveRightButton;
+    @FXML
+    public Button middleButton;
     // Fonty
     @FXML
     public MenuItem Arial;
@@ -72,15 +78,36 @@ public class PrimaryController implements Controller {
     private String language;
     private String gender;
     private String dialect;
+    public static boolean stopRequest = false;
+    public static boolean started = false;
+    public static int leftClicks = 0;
+    public static int rightClicks = 0;
+
 
     public void initialize() {
         // konstruktor nie ma dostępu do pól @FXML
         hBoxMap = Map.of("h1", h1, "h2", h2, "h3", h3, "h4", h4, "h5", h5, "h6", h6);
+        textArea.setWrapText(true);
 
         anchorPane.getStylesheets().add(getClass().getResource("/button.css").toExternalForm());
         toggleButton.getStyleClass().add("button-light");
         setSpeed();
         setLanguage();
+        middleButton.setOnMouseClicked(event -> {
+            int clickCount = event.getClickCount();
+            if (clickCount == 2) {
+                play();
+                started = true;
+            } else if (clickCount == 1 && started) {
+                stopRequest = true;
+            }
+        });
+        moveLeftButton.setOnMouseClicked(event -> {
+            leftClicks = event.getClickCount();
+        });
+        moveRightButton.setOnMouseClicked(event -> {
+            rightClicks = event.getClickCount();
+        });
     }
     public void addPdf(ActionEvent e) throws IOException {
         SecondaryController sc = (SecondaryController)SceneManager.getInstance().getController("library");
@@ -97,11 +124,10 @@ public class PrimaryController implements Controller {
         }
     }
 
-    @FXML
-    public void play(ActionEvent e) {
+    public void play() {
         String text = textArea.getText();
         String timer = clock.getText();
-        sm.readText(text, readingSpeed, language, dialect, gender, timer);
+        sm.readText(text, readingSpeed, language, dialect, gender, timer, middleButton, moveLeftButton, moveRightButton, true);
     }
 
     public void setLanguage() {
@@ -144,7 +170,8 @@ public class PrimaryController implements Controller {
     }
 
     public void setSpeed() {
-        speed.setText("175");
+        readingSpeed = "175";
+        speed.setText(readingSpeed);
         speed.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.ENTER) {
                 String readingSpeed = speed.getText();

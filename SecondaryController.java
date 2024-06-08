@@ -2,6 +2,7 @@ package org.example.controller;
 
 import java.io.IOException;
 
+import com.google.api.services.storage.model.Folder;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.ListView;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ClipboardContent;
@@ -39,6 +41,15 @@ public class SecondaryController implements Controller {
 
     public void initialize() {
         setListView();
+        list.addListener((ListChangeListener<BarController>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    for (BarController bar : c.getAddedSubList()) {
+                        deleteFileBar(bar);
+                    }
+                }
+            }
+        });
     }
 
     public void setListView() {
@@ -164,8 +175,24 @@ public class SecondaryController implements Controller {
         controller.updateData(selectedFile.getName(), selectedFile.length());
 
         list.add(controller);
-        listView.setItems(list);
+        listView.setItems(FXCollections.observableArrayList(list));
         openFileAndSaveToCloudIfNeeded(selectedFile, fileBar, rc, true);
+    }
+    public void deleteFileBar(BarController bar) {
+        System.out.println("czy tu jesteśmy?");
+        if (bar instanceof FileBarController) {
+            ((FileBarController) bar).getDeleteItem().setOnAction(event -> {
+                System.out.println("Deleting file");
+                list.remove(bar);
+            });
+
+        } else if (bar instanceof FolderBarController) {
+            ((FolderBarController) bar).getDeleteItem().setOnAction(event -> {
+                list.remove(bar);
+            });
+        }
+        listView.setItems(FXCollections.observableArrayList(list));
+        listView.refresh();
     }
 
     private void openFile(ObservableMap<Integer, File> files, ContextMenu contextMenu, ReadingController rc) {

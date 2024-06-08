@@ -2,6 +2,7 @@ package org.example.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -15,6 +16,8 @@ public class FileBarController extends BarController implements Controller {
     public Text fileSize;
     @FXML
     public AnchorPane fileBar;
+    @FXML
+    public MenuItem deleteItem;
     public File file;
     public Date date;
 
@@ -27,6 +30,10 @@ public class FileBarController extends BarController implements Controller {
     }
     public File getFile() {
         return file;
+    }
+
+    public MenuItem getDeleteItem() {
+        return deleteItem;
     }
 
     public Node getStructure() {

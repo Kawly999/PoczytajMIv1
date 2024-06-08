@@ -33,6 +33,8 @@ public class FolderBarController extends BarController implements Controller {
     private TextField textFieldFolderName;
     @FXML
     public AnchorPane folderBar;
+    @FXML
+    public MenuItem deleteItem;
 
     @FXML
     public void initialize() {
@@ -82,6 +84,11 @@ public class FolderBarController extends BarController implements Controller {
         textFieldFolderName.setVisible(false);
         folderName.setVisible(true);
     }
+
+    public MenuItem getDeleteItem() {
+        return deleteItem;
+    }
+
     public String getName() {
         return folderName.getText();
     }

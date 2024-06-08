@@ -49,13 +49,12 @@
             <HBox prefHeight="57.0" prefWidth="23.0" HBox.hgrow="NEVER">
                <children>
                   <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="10.0" style="-fx-background-color: transparent;">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
+                     <items>
+                        <MenuItem fx:id="deleteItem" mnemonicParsing="false" text="Usuń" />
+                     </items>
                   </MenuButton>
                </children>
                <HBox.margin>
